@@ -1,0 +1,6 @@
+.py
+build  
+documentor_dev     
+__pycache__      
+tree-sitter-python  
+test
