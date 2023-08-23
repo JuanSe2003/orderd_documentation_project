@@ -10,7 +10,7 @@ class GitOrchestrator(metaclass=NoInstanciable):
     @staticmethod
     def retrieve_file(file_path: Path) -> str:
         GitManager()
-        GitRetrieaver.retrieve_file(file_path)
+        return GitRetrieaver.retrieve_file(file_path)
 
     @staticmethod
     def update_selected_commit(selected_commit_hash: str):

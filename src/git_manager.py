@@ -14,7 +14,10 @@ class GitManager(metaclass=SingletonMeta):
     def __init__(self, repo_path: Path = Path.cwd()):
         self.project_repo = Repository(repo_path)
         self.head_commit = self.project_repo.head.peel(Commit)
-        self.selected_commit = self.head_commit.parents[0]
+        if self.head_commit.parents[0]:
+            self.selected_commit = self.head_commit.parents[0]
+        else:
+            raise Exception('GitManager_Error: get_head_parent_commit(), No head parent commit.')
         self.commit_tree = self.selected_commit.tree
 
     def _update_selected_commit(self, selected_commit_hash: str):

@@ -42,3 +42,5 @@ class GitRetrieval:
 ´´´
 
 # Hallar forma de documentar todas las dependencias de un archivo
+
+# Cuidado con los subrepositorios, pensar en monorepo, polyrepo
