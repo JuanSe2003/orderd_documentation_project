@@ -10,7 +10,6 @@ from tree_sitter_util import (
     global_node_types,
 )
 from file_handler import FileHandler
-from pathlib import Path
 
 @dataclass
 class CodeScrapper:
@@ -26,7 +25,7 @@ class CodeScrapper:
             raise Exception("CodeScrapper_File_Error: No file has been charged ")
         self._scrape_relevant()
         self._scrape_assignment()
-        return True
+        return True # hello
 
     def change_file(self, file: FileHandler) -> bool:
         self._input_file = file
