@@ -81,6 +81,3 @@ class CodeScrapper:
     def show_storage(self):
         self._snippet_storage.show_storage()
 
-def delete_this():
-    return
-
