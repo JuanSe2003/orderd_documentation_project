@@ -2,7 +2,7 @@ from snippet_storage import SnippetStorage
 from dataclasses import dataclass, field
 from tree_sitter import Parser, Node
 from languages import FileExtension, LanguageNodes
-from typing import Set
+from typing import Set, Dict
 from code_snippet import CodeSnippet
 from snippet_extract import SnippetExtract
 from tree_sitter_util import (
@@ -31,6 +31,10 @@ class CodeScrapper:
         self._input_file = file
         self._update_scrapper()
         return True
+    
+    @property
+    def storage_dict(self) -> Dict[int, CodeSnippet]:
+        return self._snippet_storage.storage
 
     def _update_scrapper(self):
         self._update_parser()
@@ -74,6 +78,9 @@ class CodeScrapper:
     def _check_input_file(self):
         return self._input_file != None and isinstance(self._input_file, FileHandler)
 
-    def _show(self):
-        self._snippet_storage._show_storage()
+    def show_storage(self):
+        self._snippet_storage.show_storage()
+
+def delete_this():
+    return
 
