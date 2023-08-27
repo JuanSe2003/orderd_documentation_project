@@ -1,15 +1,22 @@
 from dataclasses import dataclass, field
-from singleton_meta import SingletonMeta
 from code_snippet import CodeSnippet
 from typing import Dict, Union
 
-#deja de ser singleton ya que se necesita comparar almacenamientos. 
+
 @dataclass
+# Crear un constructor a partir de otro Dict
 class SnippetStorage:
     _storage: Dict[int, CodeSnippet] = field(default_factory=dict)
 
     def __contains__(self, code_snippet: CodeSnippet):
         return isinstance(self.get_code_snippet(code_snippet), CodeSnippet)
+
+    @property
+    def storage(self) -> Dict[int, CodeSnippet]:
+        return self._storage
+
+    def update_storage(self, snippets_dict: Dict[int, CodeSnippet]):
+        self.storage.update(snippets_dict)
 
     def get_code_snippet(self, code_snippet: CodeSnippet) -> Union[CodeSnippet, None]:
         hashed_snippet = hash(code_snippet)
@@ -39,7 +46,7 @@ class SnippetStorage:
         hashed_snippet = hash(code_snippet)
         self._storage.pop(hashed_snippet)
         return True
-    
-    def _show_storage(self):
+
+    def show_storage(self):
         for key, value in (self._storage).items():
-            print(f'{key}: {value}')
+            print(f"{key}: {value}")

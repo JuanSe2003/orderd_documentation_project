@@ -1,6 +1,5 @@
 from pathlib import Path
-from git_orchestrator import GitOrchestrator
-
+from git_retrieaver import GitRetrieaver
 
 
 class FileHandler:
@@ -9,7 +8,7 @@ class FileHandler:
             self.file_path = file_path
             self.file_name = self.file_path.name
             self.file_extension = self.file_path.suffix[1:]
-            self.file_str = GitOrchestrator.retrieve_file(self.file_path) 
+            self.file_str = GitRetrieaver.retrieve_file(self.file_path) 
         else:
             raise Exception("FileHandler_Path_Error: The given path is not a file")
 

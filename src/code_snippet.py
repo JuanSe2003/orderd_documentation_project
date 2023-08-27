@@ -37,6 +37,10 @@ class CodeSnippet:
         string = f"\n\nfile_path: {self.file_path}\nfile_name: {self.file_name}\nfile_extension: {self.file_extension}\nsnippet_type: {self.code_snippet_type}\nsnippet_identifier: {self.code_snippet_identifier}\nsnippet_implementation:\n\n{self.code_snippet_implementation}\n"
         return string
 
+    @property
+    def implementation(self):
+        return self.code_snippet_implementation
+
     def json(self) -> str:
         return json.dumps(asdict(self))
 

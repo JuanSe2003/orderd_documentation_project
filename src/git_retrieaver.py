@@ -15,7 +15,7 @@ class GitRetrieaver(metaclass=NoInstanciable):
     @staticmethod
     def _get_file_git_object(file_path: Path) -> Blob:
         path_way = str(file_path).split("\\")
-        current_object = GitManager.commit_tree()
+        current_object = GitManager.selected_commit_tree()
         for path in path_way:
             if current_object[path]:
                 current_object = current_object[path]

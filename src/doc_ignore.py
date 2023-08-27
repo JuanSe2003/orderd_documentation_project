@@ -7,13 +7,15 @@ y tambien carpetas
 from dataclasses import dataclass
 from pathlib import Path
 from singleton_meta import SingletonMeta
+from typing import ClassVar
 class DocIgnore(metaclass=SingletonMeta):
     """ 
     Este archivo siempre debe estar en una carpeta en el primer nivel del proyecto
     ya que se deberia buscar la carpeta raiz del proyecto en si 
     """
+    instance: ClassVar
     def __init__(self, root_path: Path = None):
-        project_root = root_path if root_path != None else DocIgnore._get_path()
+        project_root = root_path if root_path != None else Path('.')
         doc_ignore = project_root / '.docignore'
         if doc_ignore.exists():
             read_doc = doc_ignore.read_text()
@@ -26,7 +28,3 @@ class DocIgnore(metaclass=SingletonMeta):
 
     def __contains__(self, sys_object: str):
         return sys_object in self.ignore
-
-    @staticmethod
-    def _get_path():
-        return Path.cwd()

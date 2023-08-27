@@ -1,8 +1,11 @@
-from git_orchestrator import GitOrchestrator
 from pathlib import Path
 from file_scrapper import FileScrapper
 from git_manager import GitManager
+from git_file_checker import GitFileChecker
 from pygit2 import GIT_OBJ_COMMIT
+from modified_files_manager import ModifiedFilesManager
+from file_handler import FileHandler
+from documentation_manager import DocumentationManager
 if __name__ == "__main__":
     # algo = Path("./src/doc_ignore.py")
 
@@ -36,7 +39,12 @@ if __name__ == "__main__":
     # # Imprime las rutas
     # for path in file_paths:
     #     print(path)
-    file_scrapper = FileScrapper()
-    file_scrapper._start_current_file_paths()
-    print(file_scrapper._current_file_paths)
+    # GitManager.select_front_commit()
+    # file_scrapper = FileScrapper()
+    # a = file_scrapper._start_current_file_paths()
+    # GitFileChecker.update_changed_files()
+    # file_scrapper.scrape_specified(GitFileChecker.modified)
+    # print(file_scrapper._code_scrapper._show())
+    DocumentationManager.run_diagnosis()
+    DocumentationManager.show_results()
     pass

@@ -3,28 +3,31 @@ from pygit2 import Diff, Commit, GIT_DELTA_ADDED, GIT_DELTA_MODIFIED, GIT_DELTA_
 from typing import Dict
 from pathlib import Path
 from no_instanciable_meta import NoInstanciable
-
+from typing import List
 # Todo manejo de git se debe hacer a través de gitManager
 class GitFileChecker(metaclass=NoInstanciable):
+    added: List[Path] = []
+    modified: List[Path] = []
+    deleted: List[Path] = []
+    files_diff: Diff
     @staticmethod
-    def check_file_changes() -> Dict[str, Path]:
-        tail_commit = GitManager.selected_commit()
-        head_commit = GitManager.head_commit()
-        files_diff = GitFileChecker._get_diff(tail_commit, head_commit)
-        return GitFileChecker._extract_changes(files_diff)
+    def update_changed_files():
+        tail_commit = GitManager.tail_commit()
+        front_commit = GitManager.front_commit()
+        GitFileChecker.files_diff = GitFileChecker._get_diff(tail_commit, front_commit)
+        GitFileChecker._extract_changes()
 
     @staticmethod
     def _get_diff(tail_commit: Commit, head_commit: Commit) -> Diff:
         return GitManager.project_repo().diff(tail_commit, head_commit)
 
     @staticmethod
-    def _extract_changes(files_diff: Diff) -> Dict[str, Path]:
-        files_changes = {"added": [], "modified": [], "deleted": []}
-        for patch in files_diff:
+    def _extract_changes():
+        for patch in GitFileChecker.files_diff:
             if patch.delta.status == GIT_DELTA_ADDED:
-                files_changes["added"].append(Path(patch.delta.new_file.path))
+                GitFileChecker.added.append(Path(patch.delta.new_file.path))
             elif patch.delta.status == GIT_DELTA_MODIFIED:
-                files_changes["modified"].append(Path(patch.delta.new_file.path))
+                GitFileChecker.modified.append(Path(patch.delta.new_file.path))
             elif patch.delta.status == GIT_DELTA_DELETED:
-                files_changes["deleted"].append(Path(patch.delta.old_file.path))
-        return files_changes
+                GitFileChecker.deleted.append(Path(patch.delta.old_file.path))
+

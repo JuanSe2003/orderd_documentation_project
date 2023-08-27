@@ -20,10 +20,7 @@
 3. Cambiar la lógica de filehandler. 
 
 
-# Problemas
 
-1. Como obtener el archivo con la version de un commit pasado y hacer el scrapping usando un codescrapper.
-2.  
 
 # git retrieval 
 1. debe recibir un file_path al cual se va a buscar una versión anterior. 
@@ -50,3 +47,7 @@ Por cada archivo se crea una carpeta y por cada nodo se crea un md
 
 # HEAD
 
+# Falta aplicar la lógica que compara los dos snippet storage y verifica si la implementación es la misma o no.
+
+# implementar el property para los atributos estaticos de la clase GitManager
+# implementar un .log
