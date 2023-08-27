@@ -7,6 +7,7 @@ def resta(a, b):
     return a - b
 
 def repetir_cadena(s, n):
+    print('hello')
     return s * n
 
 

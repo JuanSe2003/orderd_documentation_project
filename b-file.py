@@ -5,6 +5,7 @@ def concatenar_cadenas(a, b):
 
 def agregar_elemento(lista, elemento):
     lista.append(elemento)
+    print('hola_mundo')
     return lista
 
 def obtener_elemento(lista, indice):
