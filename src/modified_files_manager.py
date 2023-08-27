@@ -62,6 +62,7 @@ class ModifiedFilesManager(metaclass=SingletonMeta):
     def _update_all_snippets_dict(self):
         self._update_new_added_snippets_dict()
         self._update_old_deleted_snippets_dict()
+        self._update_modified_snippets_dict()
 
     def _update_old_deleted_snippets_dict(self):
         front_snippets_keys = set(self._file_scrapper_front.storage_dict.keys())

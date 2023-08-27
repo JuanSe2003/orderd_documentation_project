@@ -6,9 +6,7 @@ def suma(a, b):
 def resta(a, b):
     return a - b
 
-def repetir_cadena(s, n):
-    print('hello')
-    return s * n
+
 
 
 class TestFuncionesMatematicas(unittest.TestCase):
@@ -42,6 +40,10 @@ class TestFuncionesMatematicas(unittest.TestCase):
 
     def test_resta_cero_uno(self):
         self.assertEqual(resta(0, 1), -1)
+        return 'a'
+
+def foo():
+    return
 
 if __name__ == '__main__':
     unittest.main()
