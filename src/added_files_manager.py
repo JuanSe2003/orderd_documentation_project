@@ -3,7 +3,7 @@ from snippet_storage import SnippetStorage
 from git_file_checker import GitFileChecker
 from typing import ClassVar, Dict
 from singleton_meta import SingletonMeta
-
+from git_manager import GitManager
 class AddedFilesManager(metaclass=SingletonMeta):
     instance: ClassVar
     _added_file_scrapper : FileScrapper
@@ -14,6 +14,7 @@ class AddedFilesManager(metaclass=SingletonMeta):
         self._snippets_to_doc = SnippetStorage()
 
     def _start_added_file_scrapper(self):
+        GitManager.select_front_commit()
         self._added_file_scrapper.scrape_specified(GitFileChecker.added)
 
     def _update_snippets_to_doc(self):

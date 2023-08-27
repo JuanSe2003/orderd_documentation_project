@@ -25,8 +25,10 @@ class DocIgnore(metaclass=SingletonMeta):
             doc_set = set(doc_lines)
             clean_doc_set = {line.strip() for line in doc_set}
             self.ignore = clean_doc_set
+            GitManager.select_tail_commit()
         else:
             raise Exception('DocIgnore_.docignore_not_found: .docignore is not at the root dir')
 
     def __contains__(self, sys_object: str):
         return sys_object in self.ignore
+    

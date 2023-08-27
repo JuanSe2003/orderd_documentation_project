@@ -115,4 +115,4 @@ class ModifiedFilesManager(metaclass=SingletonMeta):
     def check_modified_files():
         return ModifiedFilesManager.instance._check_modified_files()
 
-modified_files_manager = ModifiedFilesManager()
+ModifiedFilesManager()

@@ -4,6 +4,7 @@ from pygit2 import Tree, GIT_OBJ_COMMIT
 from typing import List
 from doc_ignore import DocIgnore
 
+
 # falta implementar el acceso a repositorios, pensar en monorepos raros
 class GitFilePaths:
     doc_ignore = DocIgnore()
@@ -40,5 +41,3 @@ class GitFilePaths:
                 )
                 paths.extend(dir_paths)
         return paths
-
-print(GitFilePaths.get_all_paths())

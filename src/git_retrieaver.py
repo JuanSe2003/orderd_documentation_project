@@ -17,7 +17,7 @@ class GitRetrieaver(metaclass=NoInstanciable):
         path_way = str(file_path).split("\\")
         current_object = GitManager.selected_commit_tree()
         for path in path_way:
-            if current_object[path]:
+            if path in current_object:
                 current_object = current_object[path]
             else:
                 raise Exception('Git_Retriever_Error: Not object found in git tree.')

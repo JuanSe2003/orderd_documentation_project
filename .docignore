@@ -1,8 +1,6 @@
 build  
-documentor_dev     
-__pycache__      
+documentor_dev         
 tree-sitter-python  
-test
 .txt
 .md
 src
