@@ -6,7 +6,7 @@ from typing import List, Dict
 from git_manager import GitManager
 from pygit2 import Tree, GIT_OBJ_COMMIT
 from code_snippet import CodeSnippet
-
+from git_file_checker import GitFileChecker
 
 # dejar una sola función que sea que scrape specified y obtener todas las rutas de interes recorriendo el commit tree.
 # añadir variable que me diga cuales archivos han sido documentados
@@ -25,6 +25,7 @@ class FileScrapper:
     def scrape_specified(self, specified_files: List[Path]) -> bool:
         for file_path in specified_files:
             if self._valid_file(file_path):
+                print(f'{file_path}, valid', GitManager.selected_commit())
                 self._start_scrape(file_path)
         return True
 
@@ -43,8 +44,7 @@ class FileScrapper:
     def _valid_file(self, sys_path: Path) -> bool:
         divide_path = str(sys_path).split("\\")
         return not (
-            (sys_path.name in self._ignore)
-            or (sys_path.name in divide_path)
+            (any(path_name in self._ignore for path_name in divide_path))
             or (sys_path.suffix in self._ignore)
             or (sys_path.name == ".docignore")
             or (sys_path.name == ".git")

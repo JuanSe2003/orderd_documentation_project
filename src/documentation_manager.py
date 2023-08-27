@@ -19,15 +19,12 @@ class DocumentationManager(metaclass=SingletonMeta):
         self._files_to_delete = None
 
     def _update_snippets_to_doc(self):
-        AddedFilesManager.check_added_files()
         added_file_snippets_dict = AddedFilesManager.get_snippets_to_doc().storage
         self._snippets_to_doc.update_storage(added_file_snippets_dict)
-        ModifiedFilesManager.check_modified_files()
         modified_file_snippets_dict = ModifiedFilesManager.get_snippets_to_doc().storage
         self._snippets_to_doc.update_storage(modified_file_snippets_dict)
 
     def _update_snippets_to_delete(self):
-        ModifiedFilesManager.check_modified_files()
         deleted_file_snippets_dict = (
             ModifiedFilesManager.get_snippets_to_delete().storage
         )
@@ -39,6 +36,8 @@ class DocumentationManager(metaclass=SingletonMeta):
     @staticmethod
     def run_diagnosis():
         GitFileChecker.update_changed_files()
+        AddedFilesManager.check_added_files()
+        ModifiedFilesManager.check_modified_files()
         DocumentationManager.instance._update_snippets_to_doc()
         DocumentationManager.instance._update_snippets_to_delete()
         DocumentationManager.instance._update_files_to_delete()
@@ -63,6 +62,7 @@ class DocumentationManager(metaclass=SingletonMeta):
         print('-------------------------------------------------------------\n')
         DocumentationManager.get_snippets_to_delete().show_storage()
         print('-------------------------------------------------------------\n')
+        print(DocumentationManager.instance._files_to_delete)
         print('\n\n\nEND')
 
 documentation_manager = DocumentationManager()

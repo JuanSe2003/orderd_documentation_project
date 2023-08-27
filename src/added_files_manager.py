@@ -14,8 +14,9 @@ class AddedFilesManager(metaclass=SingletonMeta):
         self._snippets_to_doc = SnippetStorage()
 
     def _start_added_file_scrapper(self):
-        GitManager.select_front_commit()
-        self._added_file_scrapper.scrape_specified(GitFileChecker.added)
+        if GitFileChecker.added:
+            GitManager.select_front_commit()
+            self._added_file_scrapper.scrape_specified(GitFileChecker.added)
 
     def _update_snippets_to_doc(self):
         self._start_added_file_scrapper()

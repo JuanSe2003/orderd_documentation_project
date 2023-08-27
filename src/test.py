@@ -12,4 +12,6 @@ from git_file_paths import GitFilePaths
 if __name__ == "__main__":
     DocumentationManager.run_diagnosis()
     DocumentationManager.show_results()
+    ModifiedFilesManager.get_snippets_to_doc()
+    print(GitFileChecker.added, GitFileChecker.deleted, GitFileChecker.modified)
     pass

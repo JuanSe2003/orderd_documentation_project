@@ -34,10 +34,11 @@ class ModifiedFilesManager(metaclass=SingletonMeta):
         return self._snippets_to_doc
 
     def _check_modified_files(self):
-        self._start_file_scrappers()
-        self._update_all_snippets_dict()
-        self._update_snippets_to_doc()
-        self._update_snippets_to_delete()
+        if GitFileChecker.modified:
+            self._start_file_scrappers()
+            self._update_all_snippets_dict()
+            self._update_snippets_to_doc()
+            self._update_snippets_to_delete()
 
     def _update_snippets_to_doc(self):
         self.snippets_to_doc.update_storage(self._new_added_snippets_dict)
@@ -45,9 +46,6 @@ class ModifiedFilesManager(metaclass=SingletonMeta):
 
     def _update_snippets_to_delete(self):
         self.snippets_to_delete.update_storage(self._old_deleted_snippets_dict)
-
-    def _update_changed_files(self):
-        GitFileChecker.update_changed_files()
 
     def _start_file_scrapper_front(self):
         GitManager.select_front_commit()
@@ -58,12 +56,10 @@ class ModifiedFilesManager(metaclass=SingletonMeta):
         self._file_scrapper_tail.scrape_specified(GitFileChecker.modified)
 
     def _start_file_scrappers(self):
-        self._update_changed_files()
         self._start_file_scrapper_front()
         self._start_file_scrapper_tail()
 
     def _update_all_snippets_dict(self):
-        self._update_modified_snippets_dict()
         self._update_new_added_snippets_dict()
         self._update_old_deleted_snippets_dict()
 
