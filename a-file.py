@@ -6,6 +6,10 @@ def suma(a, b):
 def resta(a, b):
     return a - b
 
+def repetir_cadena(s, n):
+    return s * n
+
+
 class TestFuncionesMatematicas(unittest.TestCase):
 
     def test_suma_positivos(self):
