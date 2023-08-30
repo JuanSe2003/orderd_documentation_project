@@ -51,3 +51,7 @@ Por cada archivo se crea una carpeta y por cada nodo se crea un md
 
 # implementar el property para los atributos estaticos de la clase GitManager
 # implementar un .log
+
+# DocManager
+
+Se debe verificar si existe un doc.log dentor del árbol del último commit, se hace la documentación de todos los git_file_paths en caso de que no exista, entonces se crea un nuevo cmmit añadiendo el doc.log y se hace squash con el commit original.

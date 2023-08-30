@@ -11,6 +11,9 @@ class SnippetStorage:
     def __contains__(self, code_snippet: CodeSnippet):
         return isinstance(self.get_code_snippet(code_snippet), CodeSnippet)
 
+    def __len__(self):
+        return len(self.storage)
+
     @property
     def storage(self) -> Dict[int, CodeSnippet]:
         return self._storage

@@ -19,7 +19,7 @@ class GitFilePaths:
         )
 
     @staticmethod
-    def get_all_paths(
+    def get_all_valid_paths(
         git_tree: Tree = GitManager.selected_commit_tree(),
         parent_path: Path = Path("."),
     ) -> List[Path]:
