@@ -1,11 +1,12 @@
 import unittest
 
-
+def foo():
+    return 'a'
 
 def agregar_elemento(lista, elemento):
     lista.append(elemento)
     print('hola_mundo')
-    return lista
+    return foo()
 
 def obtener_elemento(lista, indice):
     return lista[indice]

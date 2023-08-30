@@ -48,5 +48,6 @@ class FileScrapper:
             or (sys_path.suffix in self._ignore)
             or (sys_path.name == ".docignore")
             or (sys_path.name == ".git")
+            or (sys_path.name == "doc.log")
         )
 

@@ -38,12 +38,9 @@ class TestFuncionesMatematicas(unittest.TestCase):
     def test_suma_cero_uno(self):
         self.assertEqual(suma(0, 1), 1)
 
-    def test_resta_cero_uno(self):
-        self.assertEqual(resta(0, 1), -1)
-        return 'a'
 
-def foo():
-    return
+
+
 
 if __name__ == '__main__':
     unittest.main()
