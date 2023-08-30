@@ -1,6 +1,6 @@
 build  
 documentor_dev         
 tree-sitter-python  
+src
 .txt
 .md
-src
