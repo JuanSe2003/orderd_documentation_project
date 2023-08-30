@@ -8,6 +8,7 @@ from pathlib import Path
 from snippet_storage import SnippetStorage
 from git_manager import GitManager
 from textwrap import dedent
+from git_retrieaver import GitRetrieaver
 # snippets to delete no tiene en cuenta los archivos eliminados
 
 class DocLog:
@@ -38,7 +39,12 @@ class DocLog:
     @staticmethod
     def exists_doc_log() -> bool:
         desired_path = Path("./doc.log")
-        return desired_path.exists()
+        try:
+            GitManager.select_front_commit()
+            GitRetrieaver.get_file_git_object(desired_path)
+            return True
+        except Exception:
+            return False
 
     @staticmethod
     def get_doc_log_path() -> Path:
