@@ -12,7 +12,7 @@ class CodeSnippet:
     file_extension: str
     code_snippet_type: str
     code_snippet_identifier: str
-    code_snippet_implementation: str = field(hash=False) #comment
+    code_snippet_implementation: str = field(hash=False)
 
     def __init__(self, file_handler: FileHandler, snippet_extract: SnippetExtract):
         self.file_path = file_handler.file_path
