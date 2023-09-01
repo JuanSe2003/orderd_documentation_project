@@ -35,7 +35,6 @@ class GitFilePaths:
                 or entry.type == GIT_OBJ_COMMIT
                 or not GitFilePaths._valid_file(full_path)
             )
-            print(full_path, '   |VALID|:', not conditions)
             if conditions:
                 continue
             if full_path.is_file():

@@ -22,7 +22,6 @@ class FileScrapper:
     def scrape_specified(self, specified_files: List[Path]) -> bool:
         for file_path in specified_files:
             if self._valid_file(file_path):
-                print(f"{file_path}, valid", GitManager.selected_commit())
                 self._start_scrape(file_path)
         return True
 
