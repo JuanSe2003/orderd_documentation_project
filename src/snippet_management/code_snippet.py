@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 
-@dataclass()
+@dataclass
 class CodeSnippet:
     file_path: Path
     file_name: str
