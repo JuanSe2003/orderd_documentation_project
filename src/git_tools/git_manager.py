@@ -59,6 +59,64 @@ class GitManager(metaclass=SingletonMeta):
         self.selected_commit = self.tail_commit
         self.selected_commit_tree = self.tail_commit_tree
 
+    def _stage_file(self, file_path: Path):
+        repo: Repository = self.project_repo
+        repo.index.add(file_path)
+        repo.index.write()
+
+    def _stage_file_list(self, files_paths: List[Path]):
+        for file_path in files_paths:
+            self._stage_file(file_path)
+
+    def _commit(self, commit_msg: str = None):
+        if not commit_msg:
+            commit_msg = f"DOCUMENTED COMMIT:{self.head_commit.hex}"
+        repo: Repository = self.project_repo
+        author = repo.default_signature
+        tree = repo.index.write_tree()
+        repo.create_commit("HEAD", author, author, commit_msg, tree, [repo.head.target])
+
+    def _squash_commits(self, prefix: str = None):
+        if not prefix:
+            prefix = "'documented change':"
+        repo: Repository = self.project_repo
+        head = repo.head
+        parent_commit = repo.revparse_single(f"{head.target}~1")
+        last_commit = repo.revparse_single(f"{head.target}")
+        new_commit = repo.create_commit(
+            head.name,
+            last_commit.author,
+            last_commit.committer,
+            f"{prefix} {parent_commit.message}",
+            last_commit.tree,
+            [parent_commit.parent_ids[0]],
+        )
+        head.set_target(new_commit)
+        self.head_commit = self.project_repo.head.peel(Commit)
+
+    @staticmethod
+    def stage_file(file_path: Path):
+        GitManager.instance._stage_file(file_path)
+
+    @staticmethod
+    def stage_file_list(files_paths: List[Path]):
+        GitManager.instance._stage_file_list(files_paths)
+
+    @staticmethod
+    def commit(commit_msg: str = None):
+        GitManager.instance._commit(commit_msg)
+
+    @staticmethod
+    def squash_commits(prefix: str = None):
+        GitManager.instance._squash_commits(prefix)
+
+    @staticmethod
+    def commit_doc_changes(): # also should stage docs directory
+        doc_log_path = Path("./doc.log")
+        GitManager.stage_file(doc_log_path)
+        GitManager.commit()
+        GitManager.squash_commits()
+
     @staticmethod
     def update_front_commit(front_commit_hash: str):
         GitManager.instance._update_front_commit(front_commit_hash)

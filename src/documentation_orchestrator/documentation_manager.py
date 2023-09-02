@@ -3,6 +3,7 @@ from documentation_orchestrator.added_files_manager import AddedFilesManager
 from documentation_orchestrator.first_run_manager import FirstRunManager
 from snippet_management.snippet_storage import SnippetStorage
 from git_tools.git_file_checker import GitFileChecker
+from git_tools.git_manager import GitManager
 from metaclasses.singleton_meta import SingletonMeta
 from doc_log.doc_log import DocLog
 from typing import List, ClassVar
@@ -48,7 +49,7 @@ class DocumentationManager(metaclass=SingletonMeta):
             DocumentationManager._run_diagnosis()
 
     @staticmethod
-    def _update_doc_log():
+    def update_doc_log():
         to_doc = DocumentationManager.instance._snippets_to_doc
         to_delete = DocumentationManager.instance._snippets_to_delete
         DocLog.update_doc_log(to_doc, to_delete)
@@ -57,7 +58,8 @@ class DocumentationManager(metaclass=SingletonMeta):
     def _run_first_diagnosis():
         FirstRunManager.start_first_run()
         DocumentationManager.instance._update_snippets_to_doc_first_run()
-        DocumentationManager._update_doc_log()
+        DocumentationManager.update_doc_log()
+        GitManager.commit_doc_changes()
 
     @staticmethod
     def _run_diagnosis():
@@ -67,7 +69,8 @@ class DocumentationManager(metaclass=SingletonMeta):
         DocumentationManager.instance._update_snippets_to_doc()
         DocumentationManager.instance._update_snippets_to_delete()
         DocumentationManager.instance._update_files_to_delete()
-        DocumentationManager._update_doc_log()
+        DocumentationManager.update_doc_log()
+        GitManager.commit_doc_changes()
 
     @staticmethod
     def get_snippets_to_doc() -> SnippetStorage:
