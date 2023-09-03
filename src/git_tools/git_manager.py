@@ -115,6 +115,7 @@ class GitManager(metaclass=SingletonMeta):
         doc_log_path = Path("./doc.log")
         GitManager.stage_file(doc_log_path)
         GitManager.commit()
+        GitManager.squash_commits()
 
     @staticmethod
     def update_front_commit(front_commit_hash: str):
