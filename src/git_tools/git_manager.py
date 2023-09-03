@@ -11,7 +11,7 @@ class GitManager(metaclass=SingletonMeta):
     front_commit: Commit  # default = HEAD
     tail_commit: Commit  # default = HEAD^
     selected_commit: Commit  # default = HEAD^
-    front_commit_tree: Tree  #
+    front_commit_tree: Tree  #xd
     tail_commit_tree: Tree
     selected_commit_tree: Tree
     project_file_paths: List[Path]
@@ -115,7 +115,6 @@ class GitManager(metaclass=SingletonMeta):
         doc_log_path = Path("./doc.log")
         GitManager.stage_file(doc_log_path)
         GitManager.commit()
-        GitManager.squash_commits()
 
     @staticmethod
     def update_front_commit(front_commit_hash: str):
