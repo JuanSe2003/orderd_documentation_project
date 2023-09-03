@@ -76,24 +76,6 @@ class GitManager(metaclass=SingletonMeta):
         tree = repo.index.write_tree()
         repo.create_commit("HEAD", author, author, commit_msg, tree, [repo.head.target])
 
-    def _squash_commits(self, prefix: str = None):
-        if not prefix:
-            prefix = "'documented change':"
-        repo: Repository = self.project_repo
-        head = repo.head
-        parent_commit = repo.revparse_single(f"{head.target}~1")
-        last_commit = repo.revparse_single(f"{head.target}")
-        new_commit = repo.create_commit(
-            head.name,
-            last_commit.author,
-            last_commit.committer,
-            f"{prefix} {parent_commit.message}",
-            last_commit.tree.oid,
-            [parent_commit.parent_ids[0]],
-        )
-        head.set_target(new_commit)
-        self.head_commit = self.project_repo.head.peel(Commit)
-
     @staticmethod
     def stage_file(file_path: Path):
         GitManager.instance._stage_file(file_path)
@@ -107,15 +89,10 @@ class GitManager(metaclass=SingletonMeta):
         GitManager.instance._commit(commit_msg)
 
     @staticmethod
-    def squash_commits(prefix: str = None):
-        GitManager.instance._squash_commits(prefix)
-
-    @staticmethod
     def commit_doc_changes():  # also should stage docs directory
         doc_log_path = Path("./doc.log")
         GitManager.stage_file(doc_log_path)
         GitManager.commit()
-        GitManager.squash_commits()
 
     @staticmethod
     def update_front_commit(front_commit_hash: str):
