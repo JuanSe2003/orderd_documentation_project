@@ -11,7 +11,7 @@ class GitManager(metaclass=SingletonMeta):
     front_commit: Commit  # default = HEAD
     tail_commit: Commit  # default = HEAD^
     selected_commit: Commit  # default = HEAD^
-    front_commit_tree: Tree  #xd
+    front_commit_tree: Tree
     tail_commit_tree: Tree
     selected_commit_tree: Tree
     project_file_paths: List[Path]
@@ -70,7 +70,7 @@ class GitManager(metaclass=SingletonMeta):
 
     def _commit(self, commit_msg: str = None):
         if not commit_msg:
-            commit_msg = f"DOCUMENTED COMMIT:{self.head_commit.hex}"
+            commit_msg = f"DOCUMENTED COMMIT:{self.head_commit.short_id}"
         repo: Repository = self.project_repo
         author = repo.default_signature
         tree = repo.index.write_tree()
@@ -111,7 +111,7 @@ class GitManager(metaclass=SingletonMeta):
         GitManager.instance._squash_commits(prefix)
 
     @staticmethod
-    def commit_doc_changes(): # also should stage docs directory
+    def commit_doc_changes():  # also should stage docs directory
         doc_log_path = Path("./doc.log")
         GitManager.stage_file(doc_log_path)
         GitManager.commit()
