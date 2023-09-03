@@ -88,7 +88,7 @@ class GitManager(metaclass=SingletonMeta):
             last_commit.author,
             last_commit.committer,
             f"{prefix} {parent_commit.message}",
-            last_commit.tree,
+            last_commit.tree.oid,
             [parent_commit.parent_ids[0]],
         )
         head.set_target(new_commit)
