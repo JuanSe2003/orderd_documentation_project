@@ -29,5 +29,9 @@ def get_identifier(node: Node, file_str: str) -> str:
     return None
 
 
+def get_dependencies(root: Node) -> List[Node]:
+    dependencies_types = {'import_from_statement', 'import_from_statement'}
+    return global_node_types(root, dependencies_types)
+
 def get_implementation(node: Node, file_str: str) -> str:
     return file_str[node.start_byte : node.end_byte]

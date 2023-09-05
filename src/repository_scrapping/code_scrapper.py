@@ -10,11 +10,13 @@ from file_handler.file_handler import FileHandler
 from typing import Set, Dict
 from dataclasses import dataclass, field
 from tree_sitter import Parser, Node
+from snippet_management.dependencies_info import DependenciesInfo
 
 
 @dataclass
 class CodeScrapper:
     _input_file: FileHandler = None
+    _file_dependencies: DependenciesInfo = None
     _snippet_storage: SnippetStorage = field(default_factory=lambda: SnippetStorage())
     _parser: Parser = field(default_factory=lambda: Parser())
     _relevant_nodes_names: Set[str] = None
@@ -41,6 +43,7 @@ class CodeScrapper:
         self._update_parser()
         self._update_nodes_names()
         self._update_ast_root()
+        self._file_dependencies()
 
     def _update_parser(self):
         self._parser.set_language(FileExtension[self._input_file.file_extension].value)
@@ -57,11 +60,18 @@ class CodeScrapper:
         tree = self._parser.parse(bytes(self._input_file.file_str, "utf8"))
         self._ast_root = tree.root_node
 
+    def _update_file_dependencies(self):
+        self._file_dependencies = DependenciesInfo(
+            self._ast_root, self._input_file.file_str
+        )
+
     def _scrape_relevant(self):
         relevant_nodes = get_specified_nodes(self._ast_root, self._relevant_nodes_names)
         for node in relevant_nodes:
             snippet_extract = SnippetExtract(node, self._input_file.file_str)
-            code_snippet = CodeSnippet(self._input_file, snippet_extract)
+            code_snippet = CodeSnippet(
+                self._input_file, snippet_extract, self._file_dependencies
+            )
             self._save_code_snippet(code_snippet)
 
     def _scrape_assignment(self):
@@ -70,7 +80,9 @@ class CodeScrapper:
         )
         for node in assignment_nodes:
             snippet_extract = SnippetExtract(node, self._input_file.file_str)
-            code_snippet = CodeSnippet(self._input_file, snippet_extract)
+            code_snippet = CodeSnippet(
+                self._input_file, snippet_extract, self._file_dependencies
+            )
             self._save_code_snippet(code_snippet)
 
     def _save_code_snippet(self, code_snippet: CodeSnippet):
