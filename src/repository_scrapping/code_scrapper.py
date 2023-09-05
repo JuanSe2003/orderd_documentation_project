@@ -43,7 +43,7 @@ class CodeScrapper:
         self._update_parser()
         self._update_nodes_names()
         self._update_ast_root()
-        self._file_dependencies()
+        self._update_file_dependencies()
 
     def _update_parser(self):
         self._parser.set_language(FileExtension[self._input_file.file_extension].value)
