@@ -21,6 +21,10 @@ class CodeScrapper:
     _assignment_nodes_names: Set[str] = None
     _ast_root: Node = None
 
+    @property
+    def storage_dict(self) -> Dict[int, CodeSnippet]:
+        return self._snippet_storage.storage
+
     def extract_snippets(self) -> bool:
         if not self._check_input_file():
             raise Exception("CodeScrapper_File_Error: No file has been charged ")
@@ -32,10 +36,6 @@ class CodeScrapper:
         self._input_file = file
         self._update_scrapper()
         return True
-
-    @property
-    def storage_dict(self) -> Dict[int, CodeSnippet]:
-        return self._snippet_storage.storage
 
     def _update_scrapper(self):
         self._update_parser()
