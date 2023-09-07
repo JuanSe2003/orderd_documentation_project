@@ -59,7 +59,7 @@ class DocumentationManager(metaclass=SingletonMeta):
         FirstRunManager.start_first_run()
         DocumentationManager.instance._update_snippets_to_doc_first_run()
         DocumentationManager.update_doc_log()
-        GitManager.commit_doc_changes()
+        #GitManager.commit_doc_changes()
 
     @staticmethod
     def _run_diagnosis():
