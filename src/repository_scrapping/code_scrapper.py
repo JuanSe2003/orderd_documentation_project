@@ -5,6 +5,7 @@ from tree_sitter_logic.languages import FileExtension, LanguageNodes
 from tree_sitter_logic.tree_sitter_util import (
     get_specified_nodes,
     global_node_types,
+    get_nodes,
 )
 from file_handler.file_handler import FileHandler
 from typing import Set, Dict
@@ -66,9 +67,11 @@ class CodeScrapper:
         )
 
     def _scrape_relevant(self):
-        relevant_nodes = get_specified_nodes(self._ast_root, self._relevant_nodes_names)
-        for node in relevant_nodes:
-            snippet_extract = SnippetExtract(node, self._input_file.file_str)
+        relevant_nodes= get_nodes(
+            self._ast_root, self._relevant_nodes_names, self._input_file.file_str
+        )
+        for node_info in relevant_nodes:
+            snippet_extract = SnippetExtract(node_info, self._input_file.file_str)
             code_snippet = CodeSnippet(
                 self._input_file, snippet_extract, self._file_dependencies
             )

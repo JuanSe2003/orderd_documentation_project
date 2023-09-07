@@ -1,3 +1,4 @@
+from snippet_management.node_info import NodeInfo
 from tree_sitter import Node
 from typing import List, Set
 
@@ -30,8 +31,40 @@ def get_identifier(node: Node, file_str: str) -> str:
 
 
 def get_dependencies(root: Node) -> List[Node]:
-    dependencies_types = {'import_from_statement', 'import_from_statement'}
+    dependencies_types = {"import_from_statement", "import_from_statement"}
     return global_node_types(root, dependencies_types)
 
+
 def get_implementation(node: Node, file_str: str) -> str:
-    return file_str[node.start_byte : node.end_byte]
+    implemention = ""
+    if node.type == "class_definition":
+        implemention = _get_class_implementation(node, file_str)
+    else:
+        implemention = file_str[node.start_byte : node.end_byte]
+    return implemention
+
+
+def _get_class_implementation(node: Node, file_str: str) -> str:
+    class_implementation = []
+    for child in node.children:
+        if child.type in {"typed_parameter", "expression_statement", "assignment"}:
+            class_implementation.append(get_implementation(child, file_str))
+    implementation_string = "\n".join(class_implementation)
+    return implementation_string
+
+
+def _recursive_get_nodes(
+    parent_node_info: NodeInfo, types: Set[str], file_str: str
+) -> List[NodeInfo]:
+    nodes_list: List[NodeInfo] = list()
+    for child in parent_node_info.children:
+        if child.type in types:
+            child_node_info = NodeInfo(child, parent_node_info, file_str)
+            nodes_list.append(child_node_info)
+            nodes_list.extend(_recursive_get_nodes(child_node_info, types, file_str))
+    return nodes_list
+
+
+def get_nodes(root: Node, types: Set[str], file_str: str) -> List[NodeInfo]:
+    root_node_info: NodeInfo = NodeInfo(root)
+    return _recursive_get_nodes(root_node_info, types, file_str)

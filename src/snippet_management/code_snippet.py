@@ -12,6 +12,8 @@ class CodeSnippet:
     file_name: str
     file_extension: str
     dependencies: str
+    parent_snippet_type: str
+    parent_snippet_identifier: str
     code_snippet_type: str
     code_snippet_identifier: str
     code_snippet_implementation: str = field(hash=False)
@@ -26,6 +28,8 @@ class CodeSnippet:
         self.file_name = file_handler.file_name
         self.file_extension = file_handler.file_extension
         self.dependencies = dependencies_info.dependencies
+        self.parent_type = snippet_extract.parent_type
+        self.parent_identifier = snippet_extract.parent_identifier
         self.code_snippet_type = snippet_extract.snippet_type
         self.code_snippet_identifier = snippet_extract.snippet_identifier
         self.code_snippet_implementation = snippet_extract.snippet_implementation
@@ -42,7 +46,7 @@ class CodeSnippet:
         )
 
     def __str__(self):
-        string = f"\n\nfile_path: {self.file_path}\nfile_name: {self.file_name}\nfile_extension: {self.file_extension}\ndependencies:\n{self.dependencies}\n\nsnippet_type: {self.code_snippet_type}\nsnippet_identifier: {self.code_snippet_identifier}\nsnippet_implementation:\n\n{self.code_snippet_implementation}\n"
+        string = f"\n\nfile_path: {self.file_path}\nfile_name: {self.file_name}\nfile_extension: {self.file_extension}\ndependencies:\n{self.dependencies}\n\nparent_type: {self.parent_type}\nparent_identifier:{self.parent_identifier}\nsnippet_type: {self.code_snippet_type}\nsnippet_identifier: {self.code_snippet_identifier}\nsnippet_implementation:\n\n{self.code_snippet_implementation}\n"
         return string
 
     @property
