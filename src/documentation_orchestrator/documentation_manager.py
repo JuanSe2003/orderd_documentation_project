@@ -70,7 +70,7 @@ class DocumentationManager(metaclass=SingletonMeta):
         DocumentationManager.instance._update_snippets_to_delete()
         DocumentationManager.instance._update_files_to_delete()
         DocumentationManager.update_doc_log()
-        GitManager.commit_doc_changes()
+        #GitManager.commit_doc_changes()
 
     @staticmethod
     def get_snippets_to_doc() -> SnippetStorage:
@@ -93,6 +93,8 @@ class DocumentationManager(metaclass=SingletonMeta):
         DocumentationManager.get_snippets_to_delete().show_storage()
         print("-------------------------------------------------------------\n")
         print(DocumentationManager.instance._files_to_delete)
+        print(GitFileChecker.added)
+        print(GitFileChecker.modified)
         print("\n\n\nEND")
 
 
