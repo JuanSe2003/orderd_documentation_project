@@ -46,7 +46,7 @@ class CodeSnippet:
         )
 
     def __str__(self):
-        string = f"\n\nfile_path: {self.file_path}\nfile_name: {self.file_name}\nfile_extension: {self.file_extension}\ndependencies:\n{self.dependencies}\n\nparent_type: {self.parent_type}\nparent_identifier:{self.parent_identifier}\nsnippet_type: {self.code_snippet_type}\nsnippet_identifier: {self.code_snippet_identifier}\nsnippet_implementation:\n\n{self.code_snippet_implementation}\n"
+        string = f"\n\nfile_path: {self.file_path}\nfile_name: {self.file_name}\nfile_extension: {self.file_extension}\ndependencies:\n\n{self.dependencies}\n\nparent_type: {self.parent_type}\nparent_identifier:{self.parent_identifier}\nsnippet_type: {self.code_snippet_type}\nsnippet_identifier: {self.code_snippet_identifier}\nsnippet_implementation:\n\n{self.code_snippet_implementation}\n"
         return string
 
     @property

@@ -78,11 +78,12 @@ class CodeScrapper:
             self._save_code_snippet(code_snippet)
 
     def _scrape_assignment(self):
-        assignment_nodes = global_node_types(
-            self._ast_root, self._assignment_nodes_names
+        assignment_nodes = get_nodes(
+            self._ast_root, self._assignment_nodes_names, self._input_file.file_str
         )
-        for node in assignment_nodes:
-            snippet_extract = SnippetExtract(node, self._input_file.file_str)
+        
+        for node_info in assignment_nodes:
+            snippet_extract = SnippetExtract(node_info, self._input_file.file_str)
             code_snippet = CodeSnippet(
                 self._input_file, snippet_extract, self._file_dependencies
             )
