@@ -20,10 +20,13 @@ class NodeInfo:
             self.parent_type = "root node"
             self.parent_identifier = "root node"
         else:
-            self.parent_type = parent_node.node.type
-            self.parent_identifier = NodeInfo._get_identifier(
-                parent_node.node, file_str
-            )
+            parent_identifier = NodeInfo._get_identifier(parent_node.node, file_str)
+            if parent_identifier == None:
+                self.parent_type = parent_node.parent_type
+                self.parent_identifier = parent_node.parent_identifier
+            else: 
+                self.parent_type = parent_node.node.type
+                self.parent_identifier = parent_identifier
 
     def __str__(self):
         return f"\nnode_identifier:{NodeInfo._get_identifier(self.node, self.file_str)}\nparent_identifier:{self.parent_identifier}\parent_type:{self.parent_type}\nnode_type={self.node.type}"

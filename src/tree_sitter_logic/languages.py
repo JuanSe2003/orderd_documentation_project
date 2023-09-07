@@ -20,6 +20,6 @@ class LanguageNodes(Enum):
     """
 
     py: Tuple[Set[str], Set[str]] = (
-        {"class_definition", "class, assignment", "function_definition"},
-        {"assignment", "function_definition"},
+        {"class_definition", "function_definition"},
+        { "function_definition"},
     )

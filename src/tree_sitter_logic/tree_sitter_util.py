@@ -36,21 +36,24 @@ def get_dependencies(root: Node) -> List[Node]:
 
 
 def get_implementation(node: Node, file_str: str) -> str:
-    implemention = ""
+    implementation = ""
     if node.type == "class_definition":
-        implemention = _get_class_implementation(node, file_str)
+        implementation = _get_class_implementation(node, file_str)
     else:
-        implemention = file_str[node.start_byte : node.end_byte]
-    return implemention
+        implementation = file_str[node.start_byte : node.end_byte]
+    return implementation
 
 
 def _get_class_implementation(node: Node, file_str: str) -> str:
-    class_implementation = []
-    for child in node.children:
-        if child.type in {"typed_parameter", "expression_statement", "assignment"}:
-            class_implementation.append(get_implementation(child, file_str))
-    implementation_string = "\n".join(class_implementation)
-    return implementation_string
+    valid_types = {"typed_parameter", "expression_statement", "assignment"}
+    class_implementation = [
+        get_implementation(block_child, file_str)
+        for child in node.children
+        if child.type == "block"
+        for block_child in child.children
+        if block_child.type in valid_types
+    ]
+    return "\n".join(class_implementation)
 
 
 def _recursive_get_nodes(
