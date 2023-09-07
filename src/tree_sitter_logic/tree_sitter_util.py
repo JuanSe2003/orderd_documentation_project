@@ -53,7 +53,8 @@ def _get_class_implementation(node: Node, file_str: str) -> str:
         for block_child in child.children
         if block_child.type in valid_types
     ]
-    return "\n".join(class_implementation)
+    implementation = "\n".join(class_implementation)
+    return implementation if implementation else "NO ARGUMENTS SPECIFIED IN THIS CLASS"
 
 
 def _recursive_get_nodes(
