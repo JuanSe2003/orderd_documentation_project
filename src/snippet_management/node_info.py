@@ -11,6 +11,7 @@ class NodeInfo:
     def __init__(
         self, child_node: Node, parent_node: "NodeInfo" = None, file_str: str = None
     ):
+        self.file_str = file_str
         self.node = child_node
         if parent_node == None:
             self.parent_type = "program"
@@ -23,6 +24,12 @@ class NodeInfo:
             self.parent_identifier = NodeInfo._get_identifier(
                 parent_node.node, file_str
             )
+
+    def __str__(self):
+        return f"\nnode_identifier:{NodeInfo._get_identifier(self.node, self.file_str)}\nparent_identifier:{self.parent_identifier}\parent_type:{self.parent_type}\nnode_type={self.node.type}"
+
+    def __repr__(self):
+        return self.__str__()
 
     @property
     def children(self):

@@ -66,7 +66,7 @@ class CodeScrapper:
             self._ast_root, self._input_file.file_str
         )
 
-    def _scrape_relevant(self):
+    def _scrape_relevant(self):      
         relevant_nodes= get_nodes(
             self._ast_root, self._relevant_nodes_names, self._input_file.file_str
         )

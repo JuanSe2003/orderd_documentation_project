@@ -58,10 +58,11 @@ def _recursive_get_nodes(
 ) -> List[NodeInfo]:
     nodes_list: List[NodeInfo] = list()
     for child in parent_node_info.children:
+        child_node_info = NodeInfo(child, parent_node_info, file_str)
+        child_nodes = _recursive_get_nodes(child_node_info, types, file_str)
+        nodes_list.extend(child_nodes)
         if child.type in types:
-            child_node_info = NodeInfo(child, parent_node_info, file_str)
             nodes_list.append(child_node_info)
-            nodes_list.extend(_recursive_get_nodes(child_node_info, types, file_str))
     return nodes_list
 
 
