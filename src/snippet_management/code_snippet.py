@@ -17,7 +17,6 @@ class CodeSnippet:
     code_snippet_type: str
     code_snippet_identifier: str
     code_snippet_implementation: str = field(hash=False)
-    another_little_change:str
 
     def __init__(
         self,
@@ -34,7 +33,6 @@ class CodeSnippet:
         self.code_snippet_type = snippet_extract.snippet_type
         self.code_snippet_identifier = snippet_extract.snippet_identifier
         self.code_snippet_implementation = snippet_extract.snippet_implementation
-        foo = 'just a little change'
 
     def __hash__(self):
         return hash(

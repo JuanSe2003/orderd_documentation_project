@@ -81,7 +81,6 @@ class CodeScrapper:
         assignment_nodes = get_nodes(
             self._ast_root, self._assignment_nodes_names, self._input_file.file_str
         )
-        
         for node_info in assignment_nodes:
             snippet_extract = SnippetExtract(node_info, self._input_file.file_str)
             code_snippet = CodeSnippet(
